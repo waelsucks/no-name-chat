@@ -14,12 +14,50 @@
   flex-direction  : column;
 
   align-items     : center;
-  /* justify-content : center; */
+  
+  padding: 50px;
+
+  box-sizing: border-box;
 
   height          : 100vh;
 
   background-color: var(--bg-color);
 
+  padding-left: 20vw;
+  padding-right: 20vw;
+
+}
+
+.room-input {
+
+  display: flex;
+  flex-direction: row;
+
+  gap: 20px;
+
+  width: 80%;
+
+}
+
+.message-display {
+
+  display         : flex;
+  flex-direction  : column;
+
+  height: 80vh;
+
+}
+
+.room {
+
+  display         : flex;
+  flex-direction  : column;
+
+  align-items     : center;
+
+  width: 100%;
+
+  gap: 10px;
 
 }
 

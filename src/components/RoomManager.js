@@ -3,29 +3,30 @@ import React, { useState, useEffect } from 'react'
 import { db } from '../firebase/config'
 import { addDoc, collection, onSnapshot, doc, query } from '@firebase/firestore';
 
-function RoomManager({ setRoom }) {
+import { ListItemButton, ListItemText } from '@mui/material';
 
-    const q = query(collection(db, "Earth"));
-    const unsub = onSnapshot(q, (querySnapshot) => {
+import useFirestore from '../hooks/useFirestore';
 
-        const messages = [];
+function RoomManager({ setRoom, user }) {
 
-        querySnapshot.forEach((doc) => {
-            messages.push(doc.data().message);
-        });
-
-        console.log("Chat: ", messages.join(", "));
-
-    });
-
-    useEffect(() => {
-
-    }, [unsub])
+    const rooms  = useFirestore('rooms')
 
     return (
         <div>
+
+            <p>
+                Welcome {user.user.uid}
+            </p>
+
+            <h1>
+                Please select a room.
+            </h1>
             
-            I am a room manager.
+            {rooms && rooms.map( (room) => {return(
+                <ListItemButton sx = {{color: "var(--primary)"}}>
+                    <ListItemText primary = {room.name} onClick = {() => {setRoom(room.name)}}></ListItemText>
+                </ListItemButton>
+            )} )}
 
         </div>
     )

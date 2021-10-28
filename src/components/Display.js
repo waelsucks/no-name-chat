@@ -12,7 +12,7 @@ function Display({ user }) {
 
             {/* Step 2: Join a room. */}
 
-            {room ? <Room user = {user} /> : <RoomManager setRoom = {setRoom} />}
+            {room ? <Room user = {user} room = {room} setRoom = {setRoom}/> : <RoomManager setRoom = {setRoom} user = {user} />}
 
        </div>
     )
