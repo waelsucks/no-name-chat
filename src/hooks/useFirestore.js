@@ -2,13 +2,13 @@ import { onSnapshot, query, collection, orderBy } from "@firebase/firestore";
 import { useEffect, useState }  from "react"
 import { db }                   from "../firebase/config"
 
-const useFirestore = ( target ) => {
+const useFirestore = ( target, ordered ) => {
     
     const [docs, setDocs] = useState([]);
 
     useEffect(() => {
         
-        const q = query(collection(db, target), orderBy("createdAt"));
+        const q = query(collection(db, target), orderBy(ordered));
 
         const unsub = onSnapshot(q, (querySnapshot) => {
 
@@ -24,7 +24,7 @@ const useFirestore = ( target ) => {
 
         return () => unsub();
 
-    }, [target])
+    }, [target, ordered])
 
     return docs;
 

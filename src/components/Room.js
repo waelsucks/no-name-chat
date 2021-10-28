@@ -11,7 +11,7 @@ import { db }           from "../firebase/config";
 
 function Room({ room, user, setRoom }) {
 
-    const thisRoom = useFirestore(room);
+    let thisRoom = useFirestore(room, "createdAt");
 
     const [message, setMessage] = useState("");
 
@@ -28,6 +28,16 @@ function Room({ room, user, setRoom }) {
             deleteDoc(doc(db, room, docRecieved.id))
 
         });
+
+    }
+
+    const handleEnter = (e) => {
+
+        if (e.code === "Enter") {
+
+            handleSend();
+
+        }
 
     }
 
@@ -70,7 +80,7 @@ function Room({ room, user, setRoom }) {
                 fullWidth
 
                 style={{
-                    backgroundColor: "var(--bg-color)",
+                    backgroundColor: "rgb(51, 51, 51)",
                     borderBottom: "1px solid var(--secondary)"
                 }}
                 InputProps={{
@@ -80,7 +90,9 @@ function Room({ room, user, setRoom }) {
                     }
                 }}
 
-                onChange = { (event) => setMessage(event.target.value) }
+                onChange = { (event) => {setMessage(event.target.value)} }
+
+                onKeyDown = { (e) => {handleEnter(e)} }
 
                 value = {message}
 

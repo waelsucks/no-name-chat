@@ -6,7 +6,7 @@ import useFirestore from '../hooks/useFirestore';
 
 function RoomManager({ setRoom, user }) {
 
-    const rooms  = useFirestore('rooms')
+    const rooms  = useFirestore('rooms', "name")
 
     return (
         <div>
