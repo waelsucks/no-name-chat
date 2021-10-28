@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react'
-
-import { db } from '../firebase/config'
-import { addDoc, collection, onSnapshot, doc, query } from '@firebase/firestore';
+import React from 'react'
 
 import { ListItemButton, ListItemText } from '@mui/material';
 

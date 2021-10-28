@@ -35,7 +35,7 @@
 
   gap: 20px;
 
-  width: 80%;
+  width: 100%;
 
 }
 
@@ -44,7 +44,28 @@
   display         : flex;
   flex-direction  : column;
 
+  padding: 20px;
+
   height: 80vh;
+
+  border-left : 1px solid var(--secondary);
+  border-right: 1px solid var(--secondary);
+
+  overflow: auto;
+  width: 100%;
+
+}
+
+.sent {
+
+  align-self: flex-end;
+
+}
+
+.recieved {
+
+  align-self: flex-start;
+  color: var(--tertiary);
 
 }
 
@@ -88,7 +109,7 @@
   color           : var(--secondary);
 
   height: 100%;
-  width: 100%;
+  width: 70%;
 
 }
 

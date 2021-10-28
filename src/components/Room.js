@@ -4,17 +4,46 @@ import { Button }       from '@mui/material'
 import { TextField }    from '@mui/material';
 
 import useFirestore     from '../hooks/useFirestore'
+import Message          from './Message';
+
+import { addDoc, collection, deleteDoc, getDocs, query, serverTimestamp, doc }  from "@firebase/firestore";
+import { db }           from "../firebase/config";
 
 function Room({ room, user, setRoom }) {
 
-    const rooms = useFirestore('rooms');
+    const thisRoom = useFirestore(room);
 
     const [message, setMessage] = useState("");
 
-    const handleSend = () => {
+    const handleClear = async () => {
 
-        console.log("Sending: " + message)
+        const q = query(collection(db, room));
+
+        const querySnapshot = await getDocs(q);
+
+        querySnapshot.forEach((docRecieved) => {
+
+            // doc.data() is never undefined for query doc snapshots
+
+            deleteDoc(doc(db, room, docRecieved.id))
+
+        });
+
+    }
+
+    const handleSend = async () => {
+
+        const sendMessage = message;
+
         setMessage("")
+
+        await addDoc(collection(db, room), {
+        
+            sentBy: JSON.stringify(user),
+            text: sendMessage,
+            createdAt: serverTimestamp()
+    
+        });
 
     }
 
@@ -23,7 +52,11 @@ function Room({ room, user, setRoom }) {
 
             <div className = "message-display">
 
-                Beep.
+                {thisRoom.map((message) => {return(
+                    
+                    <Message text = {message} user = {user}></Message>
+
+                )})}
 
             </div>
             
@@ -55,10 +88,9 @@ function Room({ room, user, setRoom }) {
 
                 <Button color = "inherit" variant = "outlined" onClick = { handleSend }>Send</Button>
                 <Button color = "inherit" variant = "outlined" onClick = { () => {setRoom(null)} }>Exit</Button>
+                <Button color = "inherit" variant = "outlined" onClick = { handleClear }>CLEAR</Button>
 
             </div>
-
-            
 
         </div>
     )
